@@ -1,0 +1,44 @@
+Problem Statement-
+
+You are given a array on length 'N', you are given'Q' queries to perform, You are also given an integer 'K',
+
+1.) Replace all elements form 'L' to 'R' with F(arr[i]), where
+
+F(X) = Factorial(X) mod 10^X.
+
+
+
+2.) Output the Number of K's in the range 'L' to 'R'.
+
+
+Input Format
+
+The first line contains three integers 'N', 'Q' and 'K'.
+The next line contains 'N' space seperated integers representing the array.
+The next line contains 3 type, L, R integers representing the query type, and the range.
+
+Output Format
+
+For each query of type 2 and 3 output the answer in a new line.
+
+Constraints:
+
+1<=N<=100000
+1<=Q<=100000
+1<=X<=9
+1<=K<=1000000000
+1<=arr[i]<=1000000000
+1<=L<=R<=N
+
+
+Editorial:
+
+For the first Query, the function F(X) converges very fast, any number [except 2] will converge 
+to 1 in maximum 4 steps, 2 will remaim same after any number of operations.
+For this we can use a map to store the indices of all numbers except 1 and 2, for updation we can 
+just find all the indices whose elements are not 1,2 and update them ,and if after 
+the operation they become 1,2 then we remove the index form the map.
+
+For the Second Query, output can be given using a modified segment tree.
+
+

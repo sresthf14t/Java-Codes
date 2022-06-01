@@ -1,0 +1,5 @@
+In the first Matrix the optimal path will be-(1,1)-(1,2)-(2,2) with a total cost of 0+1+1=2
+
+Note: There is also another optimal path (1,1)-(2,1)-(2,2) with a total cost of 0+1+1=2
+
+In the second Matrix the optimal path would be (1,1)-(1,2)-(1,3)-(2,3)-(3,3) with a total cost of 0+1+1+1+1=4

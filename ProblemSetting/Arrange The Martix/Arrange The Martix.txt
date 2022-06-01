@@ -1,0 +1,41 @@
+Arrange The Martix
+
+
+You are given a 2D matrix with N rows and N coloumns.
+
+In one operation you can swap any two adjecent elements[elements that share a common side].
+
+You have to tell if after any number of operations it is possible to attain such a arrangement of the 
+matrix such that the sum of every two adjecent elements is a multiple of 'K'.
+If it is possible then print "YES" and then print the arrangement of the Matrix that satisfies 
+the given conditions, else print "NO".
+
+1<=N<=1000
+1<=arr[i][j]<=1000000000
+1<=K<=1000000000
+
+example 
+
+2 4
+6 8
+
+here sum of every two adjecent element is a multiple of 2
+2+4 is a multiple of 2
+2+6 is a multiple of 2
+4+2 is a multiple of 2
+4+8 is a multiple of 2
+6+2 is a multiple of 2
+6+8 is a multiple of 2
+8+4 is a multiple of 2
+8+6 is a multiple of 2
+
+
+Solution:
+
+By swapping multiple times we can arrive at any permutation of the matrix so the initial arrangement is not important.
+We need that sum of every adjecent element is a multiple of K,so first we change all arr[i][j] to arr[i][j]%K.
+Then there are two cases when it is possible to find a solution-
+
+1.) All the elements are zero , here any arrangement would work.
+2.) If N*N is EVEN then Exactly half of the elements are say 'X' and rest half are (K-X), here if we arrange these two in a chessboard like pattern then  it would work.
+	If N*N is ODD then floor(N*N/2) of the elements are say 'X' and rest are (K-X), here if we arrange these two in a chessboard like pattern then  it would work.

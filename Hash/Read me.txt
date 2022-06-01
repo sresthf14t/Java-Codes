@@ -1,0 +1,14 @@
+Wordlist_attMD5--It checks for a MD5 hash with a given wordlist
+			input 1-->Name of the Wordlist file(string)
+			input 2-->MD5 hash(string)
+
+
+Brute_force--Checks every possible n charecter combination of small letter chrecters for the MD5 hash
+		input 1->No. of charecter in the string(int)
+	     	input2-->MD5 Hash(string)
+
+
+Pnc_Wordlist--Creates a file with all combinations of n charecter string (only lower case charecters)
+		input 1--> No. of charecters in the String(int)
+		input 2-->file name(Stirng)
+		

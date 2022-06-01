@@ -1,0 +1,155 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Codeforces_Round_666_Div_2;
+
+/**
+ *
+ * @author Srest
+ */
+import java.util.*;
+import java.io.*;
+public class B {
+    static class Scan {
+        private byte[] buf=new byte[1024];
+        private int index;
+        private InputStream in;
+        private int total;
+        public Scan()
+        {
+            in=System.in;
+        }
+        public int scan()throws IOException
+        {
+            if(total<0)
+            throw new InputMismatchException();
+            if(index>=total)
+            {
+                index=0;
+                total=in.read(buf);
+                if(total<=0)
+                return -1;
+            }
+            return buf[index++];
+        }
+        public int scanInt()throws IOException
+        {
+            int integer=0;
+            int n=scan();
+            while(isWhiteSpace(n))
+            n=scan();
+            int neg=1;
+            if(n=='-')
+            {
+                neg=-1;
+                n=scan();
+            }
+            while(!isWhiteSpace(n))
+            {
+                if(n>='0'&&n<='9')
+                {
+                    integer*=10;
+                    integer+=n-'0';
+                    n=scan();
+                }
+                else throw new InputMismatchException();
+            }
+            return neg*integer;
+        }
+        public double scanDouble()throws IOException
+        {
+            double doub=0;
+            int n=scan();
+            while(isWhiteSpace(n))
+            n=scan();
+            int neg=1;
+            if(n=='-')
+            {
+                neg=-1;
+                n=scan();
+            }
+            while(!isWhiteSpace(n)&&n!='.')
+            {
+                if(n>='0'&&n<='9')
+                {
+                    doub*=10;
+                    doub+=n-'0';
+                    n=scan();
+                }
+                else throw new InputMismatchException();
+            }
+            if(n=='.')
+            {
+                n=scan();
+                double temp=1;
+                while(!isWhiteSpace(n))
+                {
+                    if(n>='0'&&n<='9')
+                    {
+                        temp/=10;
+                        doub+=(n-'0')*temp;
+                        n=scan();
+                    }
+                    else throw new InputMismatchException();
+                }
+            }
+            return doub*neg;
+        }
+        public String scanString()throws IOException
+        {
+            StringBuilder sb=new StringBuilder();
+            int n=scan();
+            while(isWhiteSpace(n))
+            n=scan();
+            while(!isWhiteSpace(n))
+            {
+                sb.append((char)n);
+                n=scan();
+            }
+            return sb.toString();
+        }
+        private boolean isWhiteSpace(int n)
+        {
+            if(n==' '||n=='\n'||n=='\r'||n=='\t'||n==-1)
+            return true;
+            return false;
+        }
+    }
+    public static void main(String args[]) throws IOException {
+        Scan input=new Scan();
+//        int test=input.scanInt();
+        StringBuilder ans=new StringBuilder("");
+        int n=input.scanInt();
+        long arr[]=new long[n];
+        for(int i=0;i<n;i++) {
+            arr[i]=input.scanInt();
+        }
+        ans.append(solve(n,arr)+"\n");
+        System.out.println(ans);
+    }
+    public static long solve(int n,long arr[]) {
+        Arrays.sort(arr);
+        if(n<=2) {
+            return Math.abs(arr[0]-1);
+        }
+        long min=Long.MAX_VALUE;
+        for(int i=1;i<1000000;i++) {
+            long tmp=1,total=0;
+            for(int j=0;j<n;j++) {
+                
+                if(tmp>1000000000000L || tmp<=0) {
+                    total=Long.MAX_VALUE;
+                    break;
+                }
+                total+=Math.abs(arr[j]-tmp);
+                tmp*=i;
+//                System.out.println(i+" "+arr[j]+" "+tmp);
+            }
+//            System.out.println(i+" "+total);
+            min=Math.min(min,total);
+        }
+        return min;
+    }
+}

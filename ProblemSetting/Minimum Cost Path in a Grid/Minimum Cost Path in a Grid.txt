@@ -1,0 +1,54 @@
+Minimum Cost Path
+
+
+You have to find the least cost path in a 2D grid
+
+You are given a 2D matrix containing N rows and M columns . You are currently standing at the cell (1,1) and you want to reach the clell (n,m) .
+
+You can only move Right or Down from your current cel l i.e.  if you are currently in cell (i,j) you can either move to cell (i+1,j) or cell (i,j+1).
+
+You cannot move out of the matrix.
+
+Every cell of the grid has some cost associated with it which you have to pay when you land at that cell.
+
+Each cell has a number 'K' associated with it, now the cost of that cell is defined as:   The maximum number of times you can divide 'K' by a positive integer X>1 until 'K' becomes 1 (Note: 'K' should be divisible by 'X').
+
+The cost of a path is defined as the sum of costs of all the cells in the path.
+
+You have to find the minumum cost to reach from cell (1,1) to cell (n,m).
+
+Input format
+
+The First line of the input contains T, the number of test cases
+The first line of each test case contains two integers N and M the number of Rows and Columns.
+The next N lines of each test case contains M integers repersenting the numbers on each cell of the grid.
+
+Output format
+
+Output one line per test case containing the minimum cost.
+
+Constraints
+
+1<=T<=10000
+1<=N,M<=1000
+1<=grid[i][j]<=100000
+Sum of (N*M) over all Test Cases<=1000000
+
+
+
+The idea is: 
+The Maximum number of times we can divide a number until it becomes 1 is equal to the number of its primes divisors and the number of times they occur i.e for K=300 cost=5 as 300=2*2*3*5*5.
+First we need to find the cost of all cells. This can be done by repeatedly dividing K by prime numbers till square root of K and counting the number of divisions[and we add 1 to that number if K!=1 after we have finished dividing it]. 
+We can find the primes factors of the numbers efficiently by using Sieve of Eratosthenes.
+Then we can use Dynamic Programming to solve the question. 
+we can create an 2D DP array and initialize DP[1][1]=cost[1][1].
+for(i:2 to n) :
+     DP[i][1]=DP[i-1][1]+cost[i][1]
+
+for(i:2 to m) :
+     DP[1][i]=DP[1][i-1]+cost[1][i]
+
+for(i:2 to n) :
+    for(j:2 to m) :
+       DP[i][j]=min(DP[i-1][j],DP[i][j-1])+cost[i][j]
+answer=DP[n][m]

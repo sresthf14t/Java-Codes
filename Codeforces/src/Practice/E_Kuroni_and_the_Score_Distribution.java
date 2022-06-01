@@ -1,0 +1,275 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Practice;
+
+/**
+ *
+ * @author Srest
+ */
+import java.util.*;
+import java.io.*;
+public class E_Kuroni_and_the_Score_Distribution {
+    static class Scan {
+        private byte[] buf=new byte[1024];
+        private int index;
+        private InputStream in;
+        private int total;
+        public Scan()
+        {
+            in=System.in;
+        }
+        public int scan()throws IOException
+        {
+            if(total<0)
+            throw new InputMismatchException();
+            if(index>=total)
+            {
+                index=0;
+                total=in.read(buf);
+                if(total<=0)
+                return -1;
+            }
+            return buf[index++];
+        }
+        public int scanInt()throws IOException
+        {
+            int integer=0;
+            int n=scan();
+            while(isWhiteSpace(n))
+            n=scan();
+            int neg=1;
+            if(n=='-')
+            {
+                neg=-1;
+                n=scan();
+            }
+            while(!isWhiteSpace(n))
+            {
+                if(n>='0'&&n<='9')
+                {
+                    integer*=10;
+                    integer+=n-'0';
+                    n=scan();
+                }
+                else throw new InputMismatchException();
+            }
+            return neg*integer;
+        }
+        public double scanDouble()throws IOException
+        {
+            double doub=0;
+            int n=scan();
+            while(isWhiteSpace(n))
+            n=scan();
+            int neg=1;
+            if(n=='-')
+            {
+                neg=-1;
+                n=scan();
+            }
+            while(!isWhiteSpace(n)&&n!='.')
+            {
+                if(n>='0'&&n<='9')
+                {
+                    doub*=10;
+                    doub+=n-'0';
+                    n=scan();
+                }
+                else throw new InputMismatchException();
+            }
+            if(n=='.')
+            {
+                n=scan();
+                double temp=1;
+                while(!isWhiteSpace(n))
+                {
+                    if(n>='0'&&n<='9')
+                    {
+                        temp/=10;
+                        doub+=(n-'0')*temp;
+                        n=scan();
+                    }
+                    else throw new InputMismatchException();
+                }
+            }
+            return doub*neg;
+        }
+        public String scanString()throws IOException
+        {
+            StringBuilder sb=new StringBuilder();
+            int n=scan();
+            while(isWhiteSpace(n))
+            n=scan();
+            while(!isWhiteSpace(n))
+            {
+                sb.append((char)n);
+                n=scan();
+            }
+            return sb.toString();
+        }
+        private boolean isWhiteSpace(int n)
+        {
+            if(n==' '||n=='\n'||n=='\r'||n=='\t'||n==-1)
+            return true;
+            return false;
+        }
+    }
+    
+    public static void sort(int arr[],int l,int r) {    //sort(arr,0,n-1);
+        if(l==r) {
+            return;
+        }
+        int mid=(l+r)/2;
+        sort(arr,l,mid);
+        sort(arr,mid+1,r);
+        merge(arr,l,mid,mid+1,r);
+    }
+    public static void merge(int arr[],int l1,int r1,int l2,int r2) {
+        int tmp[]=new int[r2-l1+1];
+        int indx1=l1,indx2=l2;
+        //sorting the two halves using a tmp array
+        for(int i=0;i<tmp.length;i++) {
+            if(indx1>r1) {
+                tmp[i]=arr[indx2];
+                indx2++;
+                continue;
+            }
+            if(indx2>r2) {
+                tmp[i]=arr[indx1];
+                indx1++;
+                continue;
+            }
+            if(arr[indx1]<arr[indx2]) {
+                tmp[i]=arr[indx1];
+                indx1++;
+                continue;
+            }
+            tmp[i]=arr[indx2];
+            indx2++;
+        }
+        //Copying the elements of tmp into the main array
+        for(int i=0,j=l1;i<tmp.length;i++,j++) {
+            arr[j]=tmp[i];
+        }
+    }
+    
+    public static void sort(long arr[],int l,int r) {    //sort(arr,0,n-1);
+        if(l==r) {
+            return;
+        }
+        int mid=(l+r)/2;
+        sort(arr,l,mid);
+        sort(arr,mid+1,r);
+        merge(arr,l,mid,mid+1,r);
+    }
+    public static void merge(long arr[],int l1,int r1,int l2,int r2) {
+        long tmp[]=new long[r2-l1+1];
+        int indx1=l1,indx2=l2;
+        //sorting the two halves using a tmp array
+        for(int i=0;i<tmp.length;i++) {
+            if(indx1>r1) {
+                tmp[i]=arr[indx2];
+                indx2++;
+                continue;
+            }
+            if(indx2>r2) {
+                tmp[i]=arr[indx1];
+                indx1++;
+                continue;
+            }
+            if(arr[indx1]<arr[indx2]) {
+                tmp[i]=arr[indx1];
+                indx1++;
+                continue;
+            }
+            tmp[i]=arr[indx2];
+            indx2++;
+        }
+        //Copying the elements of tmp into the main array
+        for(int i=0,j=l1;i<tmp.length;i++,j++) {
+            arr[j]=tmp[i];
+        }
+    }
+    
+    public static void main(String args[]) throws IOException {
+        Scan input=new Scan();
+        StringBuilder ans=new StringBuilder("");
+        int n=input.scanInt();
+        int m=input.scanInt();
+        if(n==1) {
+            if(m==0) {
+                System.out.println(1);
+                return;
+            }
+            System.out.println(-1);
+            return;
+        }
+        int arr[]=new int[n];
+        arr[0]=1;
+        arr[1]=2;
+        int freq[]=new int[50000001];
+        HashMap<Integer,Integer> map=new HashMap<>();
+        freq[3]++;
+        for(int i=2;i<n;i++) {
+            int ele=search(arr[i-1]+1,1000000000,m,freq,map);
+            if(ele==-1) {
+                break;
+            }
+            m-=get(ele,freq,map);
+//            System.out.println(i+" "+ele);
+            arr[i]=ele;
+            add(arr,freq,i,map);
+        }
+        if(m!=0) {
+            ans.append(-1);
+        }
+        else {
+            for(int i=0;i<n;i++) {
+                ans.append(arr[i]+" ");
+            }
+        }
+        System.out.println(ans);
+    }
+    public static int search(int l,int r,int m,int freq[],HashMap<Integer,Integer> map) {
+        int ans=-1;
+        while(l<=r) {
+            int mid=(l+r)/2;
+            int get=get(mid,freq,map);
+            if(get<=m) {
+                ans=mid;
+                r=mid-1;
+            }
+            else {
+                l=mid+1;
+            }
+        }
+        return ans;
+    }
+    public static void add(int arr[],int freq[],int indx,HashMap<Integer,Integer> map) {
+        for(int i=0;i<indx;i++) {
+            add(arr[i]+arr[indx],freq,map);
+        }
+    }
+    public static int get(int ele,int freq[],HashMap<Integer,Integer> map) {
+        if(ele<freq.length) {
+             return freq[ele];
+        }
+        if(!map.containsKey(ele)) {
+            return 0;
+        }
+        return map.get(ele);
+    }
+    public static void add(int ele,int freq[],HashMap<Integer,Integer> map) {
+        if(ele<freq.length) {
+             freq[ele]++;
+             return;
+        }
+        if(!map.containsKey(ele)) {
+            map.put(ele, 0);
+        }
+        map.replace(ele, map.get(ele)+1);
+    }
+}

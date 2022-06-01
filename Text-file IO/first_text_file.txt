@@ -1,0 +1,3 @@
+0	This_is_my_first_text_file
+1	This_is_the_code_from_book
+2	I_am_learning_java_IO
